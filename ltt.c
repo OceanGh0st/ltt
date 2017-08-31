@@ -1,5 +1,6 @@
 // ltt (LittleTerminalTasks) - Little program to organize tasks
 
+#include "db.h"
 #include <string.h>
 #include <stdio.h>
 
