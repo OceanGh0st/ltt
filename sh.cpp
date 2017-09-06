@@ -23,6 +23,7 @@ int ltt_num_builtins() { return sizeof(builtin_str) / sizeof(char *); }
 
 SH::SH(int id) { printf("print id: %i", id); }
 
+
 int SH::ltt_loop() {
 
     // Read, Parse (separate the command string into a program and arguments), and Execute commands
@@ -44,19 +45,18 @@ int SH::ltt_loop() {
     return 0;
 }
 
-
-char SH::*ltt_readline() {
+char* SH::ltt_readline() {
 
     char *line = NULL;
-    ssize_t bufsize = 0;
+    size_t bufsize = 0;
     getline(&line, &bufsize, stdin);
     return line;
 }
 
-char SH::**ltt_readline(char *line) {
+char** SH::ltt_splitline(char *line) {
     
     int bufsize = ARG_BUFSIZE, position = 0;
-    char **arguments = malloc(bufsize *sizeof(char*));
+    char **arguments = (char**)malloc(bufsize *sizeof(char*)); // (char**) - need to cast the return of the function in c++
     char *argument;
     
     if (!arguments) {
@@ -71,7 +71,7 @@ char SH::**ltt_readline(char *line) {
 
         if (position >= bufsize) {
             bufsize += ARG_BUFSIZE;
-            arguments = realloc(arguments, bufsize * sizeof(char*));
+            arguments = (char**)realloc(arguments, bufsize * sizeof(char*)); // (char**) - need to cast the return of the function in c++
         
             if (!arguments) {
                 fprintf(stderr, "Allocation error\n");
@@ -155,3 +155,6 @@ int ltt_help(char **args) {
     return 1;
 
 }
+
+
+

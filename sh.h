@@ -11,8 +11,8 @@ private:
 public:
     SH(int id);
     int ltt_loop();
-    char *ltt_readline();
-    char **ltt_splitline(char *line);
+    char* ltt_readline();
+    char** ltt_splitline(char *line);
     int ltt_execute(char **args);
     int ltt_launch(char **args);
     int ltt_help(char **args);
