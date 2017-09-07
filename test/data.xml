@@ -1,12 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
 <tasks>
-    <list id="01" name="TODO">
-        <task id="01">Do homework</task>
-        <task id="02">Go shopping</task>
-    </list>
-    <list id="02" name="In progress">
-        <task id="01">C++ project</task>
-    </list>
+	<list name="TODO">
+		<task>Do homework</task>
+		<task>Go shopping</task>
+	</list>
+	<list name="In progress">
+		<task>still testing</task>
+		<task/>
+		<task/>
+		<task/>
+		<task/>
+		<task/>
+		<task>and...testing</task>
+	</list>
+	<list name="Done">
+		<task>1 2 3 test</task>
+	</list>
 </tasks>
-
 
