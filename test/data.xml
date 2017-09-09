@@ -1,8 +1,4 @@
 <tasks>
-	<list name="TODO">
-		<task/>
-		<task>Go shopping</task>
-	</list>
 	<list name="In progress">
 		<task>C++ project</task>
 		<task>ctfarena.com</task>
@@ -11,6 +7,12 @@
 	<list name="Done">
 		<task>alamakota</task>
 		<task>1 2 3 test</task>
+	</list>
+	<list name="testing">
+		<task/>
+	</list>
+	<list name="testing">
+		<task/>
 	</list>
 </tasks>
 

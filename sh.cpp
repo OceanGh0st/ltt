@@ -19,31 +19,10 @@ int (*builtin_func[]) (char **) = {
     &ltt_help,
 };
 
-int ltt_num_builtins() { return sizeof(builtin_str) / sizeof(char *); }
+int SH::ltt_num_builtins() { return sizeof(builtin_str) / sizeof(char *); }
 
 SH::SH(int id) { printf("print id: %i", id); }
 
-
-int SH::ltt_loop() {
-
-    // Read, Parse (separate the command string into a program and arguments), and Execute commands
-
-    char *line;
-    char **args;
-    int status;
-
-    do {
-        printf("(ltt) ");
-        line = ltt_readline();
-        args = ltt_splitline(line);
-        status = ltt_execute(args);
-        
-        free(line);
-        free(args);
-    } while (status);
-
-    return 0;
-}
 
 char* SH::ltt_readline() {
 
@@ -86,7 +65,7 @@ char** SH::ltt_splitline(char *line) {
     return arguments;
 }
 
-int ltt_launch(char **args) {
+int SH::ltt_launch(char **args) {
 
     pid_t pid, wpid;
     int status;
@@ -110,11 +89,11 @@ int ltt_launch(char **args) {
     return 1;
 }
 
-int ltt_execute(char **args) {
+int SH::ltt_execute(char **args) {
     
     int i;
     if (args[0] == NULL) {
-        return 1;
+        exit(EXIT_FAILURE);
     }
 
     for (i=0; i<ltt_num_builtins(); i++) {
@@ -129,8 +108,6 @@ int ltt_execute(char **args) {
         
 
 int ltt_help(char **args) {
-
-    int i;
     
     printf("\nUSAGE: ltt [options] [task/list name/ID]\n\n");
     printf("\th\tprints out help\n");
@@ -152,9 +129,30 @@ int ltt_help(char **args) {
     printf("\trl *\tremove list(s)\n");
     printf("\trt *\tremove task(s)\n\n");
 
-    return 1;
+    return 0;
 
 }
 
 
+
+int SH::ltt_loop() {
+
+    // Read, Parse (separate the command string into a program and arguments), and Execute commands
+
+    char *line;
+    char **args;
+    int status;
+
+    do {
+        printf("(ltt) ");
+        line = ltt_readline();
+        args = ltt_splitline(line);
+        status = ltt_execute(args);
+        
+        free(line);
+        free(args);
+    } while (status);
+
+    return 0;
+}
 

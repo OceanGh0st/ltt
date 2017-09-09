@@ -88,44 +88,6 @@ int display_list(const char* list) {
 }
 
 
-
-
-// check
-int add_data() {
-
-    xml_document<> doc;
-    xml_node<>* decl = doc.allocate_node(node_declaration);
-    decl->append_attribute(doc.allocate_attribute("version", "1.0"));
-    decl->append_attribute(doc.allocate_attribute("encoding", "utf-8"));
-    doc.append_node(decl);
-
-xml_node<>* root = doc.allocate_node(node_element, "rootnode");
-root->append_attribute(doc.allocate_attribute("version", "1.0"));
-root->append_attribute(doc.allocate_attribute("type", "example"));
-doc.append_node(root);
- 
-xml_node<>* child = doc.allocate_node(node_element, "childnode");
-root->append_node(child);
-
-/*
-    save_data();
-    return 0;
-}
-
-int save_data() {
-*/
-    ofstream file_stored("file_stored.xml");
-    file_stored << doc;
-    file_stored.close();
-    doc.clear();
-
-
-    return 0;
-}
-
-
-
-
 int add_list(const char* new_list) {
     xml_document<> doc;
     xml_node<> * root_node;
@@ -146,6 +108,11 @@ int add_list(const char* new_list) {
     root_node->append_node(list_node);
     xml_attribute<> *attr = doc.allocate_attribute("name", new_list);
     list_node->append_attribute(attr);
+
+    // add task
+    xml_node<> * task_node = doc.allocate_node(node_element, "task");
+    list_node->append_node(task_node);
+    task_node->value("");
 
     // save to file
     ofstream file_stored("data.xml");
@@ -315,10 +282,6 @@ int clear_list(const char* list) {
 }
 
 int move_task(const char* task_t, const char* list) {
-/*
-    remove_task(task_t);
-    add_task(task_t, list);
-*/
 
     xml_document<> doc;
     xml_node<> * root_node;
@@ -377,7 +340,7 @@ int main() {
 
     //display_list("In progress");
 
-    //add_list("Done");
+    //add_list("testing");
     //display_all();
 
     //add_task("1 2 3 test", "Done");
@@ -390,7 +353,7 @@ int main() {
 
     //clear_list("Done");
 
-    move_task("Do homework", "In progress"); //TODO
+    //move_task("Do homework", "In progress");
 
 
     return 0;
