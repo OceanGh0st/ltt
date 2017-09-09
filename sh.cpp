@@ -1,27 +1,62 @@
 #include "sh.h"
+#include "db.h"
 #include <iostream>
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include "rapidxml/rapidxml.hpp"
+#include "rapidxml/rapidxml_print.hpp" // to use <<
 
 #define ARG_BUFSIZE 64
 #define ARG_DELIM " \t\r\n\a"
 
 // function dectarations for builtin shell commands
 int ltt_help(char **args);
+int ltt_exit(char **args);
+int ltt_da(char **args);
+int ltt_dl(char **args);
+int ltt_mv(char **args);
+int ltt_al(char **args);
+int ltt_at(char **args);
+int ltt_ra(char **args);
+int ltt_rl(char **args);
+int ltt_rt(char **args);
+int ltt_cl(char **args);
 
 // list of builtin commands, followed by their corresponsing functions
 char *builtin_str[] = {
     "h",
+    "help",
+    "exit",
+    "da",
+    "dl",
+    "mv",
+    "al",
+    "at",
+    "ra",
+    "rl",
+    "rt",
+    "cl"
 };
 
 int (*builtin_func[]) (char **) = {
     &ltt_help,
+    &ltt_help,
+    &ltt_exit,
+    &ltt_da,
+    &ltt_dl,
+    &ltt_mv,
+    &ltt_al,
+    &ltt_at,
+    &ltt_ra,
+    &ltt_rl,
+    &ltt_rt,
+    &ltt_cl
 };
 
 int SH::ltt_num_builtins() { return sizeof(builtin_str) / sizeof(char *); }
 
-SH::SH(int id) { printf("print id: %i", id); }
+SH::SH(int id) { }
 
 
 char* SH::ltt_readline() {
@@ -108,32 +143,96 @@ int SH::ltt_execute(char **args) {
         
 
 int ltt_help(char **args) {
+
+    printf("\n		___	___	___\n");
+    printf("	       /  /    /  /    /  /\n");
+    printf("	      /  /  __/  /____/  /__\n");
+    printf("	     /  / /__   ___/__   ___/\n");
+    printf("	    /  /    /  /     /  /\n");
+    printf("	   /  /	   /  /     /  /\n");
+    printf("	  /  /___ /  /_____/  /\n");
+    printf("	 /_______/__/_____/__/\n");
+    printf("\n\nltt - LittleTerminalTasks\n");
     
     printf("\nUSAGE: ltt [options] [task/list name/ID]\n\n");
-    printf("\th\tprints out help\n");
+    printf("\th, help prints out help\n");
 
     printf("displaying options\n");
     printf("\tda\tdisplay all lists\n");
-    printf("\tdl *\tdisplay list(s)\n");
-    printf("\tdt *\tdisplay task(s)\n");
+    printf("\tdl *\tdisplay list\n");
 
     printf("moving options\n");
-    printf("\tmvt * ^  move task to list\n");
+    printf("\tmv * ^  move task to list\n");
 
     printf("adding options\n");
-    printf("\trl *\tadd list(s)\n");
-    printf("\trt *\tadd task(s)\n");
+    printf("\tal *\tadd list\n");
+    printf("\tat *\tadd task\n");
 
     printf("removing options\n");
     printf("\tra\tremove all lists\n");
-    printf("\trl *\tremove list(s)\n");
-    printf("\trt *\tremove task(s)\n\n");
+    printf("\trl *\tremove list\n");
+    printf("\trt *\tremove task\n");
+    printf("\tcl *\tclean list\n\n");
 
-    return 0;
+    return 1;
 
 }
 
+int ltt_exit(char **args) { return 0; }
 
+int ltt_da(char **args) {
+    DB database(1);
+    database.display_all();
+    return 1;
+}
+
+int ltt_dl(char **args) {
+    DB database(1);
+    database.display_list(args[1]);
+    return 1;
+}
+
+int ltt_mv(char **args) {
+    DB database(1);
+    database.move_task(args[1], args[2]);
+    return 1;
+}
+
+int ltt_al(char **args) {
+    DB database(1);
+    database.add_list(args[1]);
+    return 1;
+}
+
+int ltt_at(char **args) {
+    DB database(1);
+    database.add_task(args[1], args[2]);
+    return 1;
+}
+
+int ltt_ra(char **args) {
+    DB database(1);
+    database.remove_all();
+    return 1;
+}
+
+int ltt_rl(char **args) {
+    DB database(1);
+    database.remove_list(args[1]);
+    return 1;
+}
+
+int ltt_rt(char **args) {
+    DB database(1);
+    database.remove_task(args[1]);
+    return 1;
+}
+
+int ltt_cl(char **args) {
+    DB database(1);
+    database.clear_list(args[1]);
+    return 1;
+}
 
 int SH::ltt_loop() {
 

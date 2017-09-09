@@ -16,6 +16,7 @@ public:
     int ltt_execute(char **args);
     int ltt_launch(char **args);
     int ltt_help(char **args);
+    int ltt_exit(char **args);
     char *buildin_str[];
     int ltt_num_builtins();
 
