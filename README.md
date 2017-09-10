@@ -28,9 +28,3 @@ USAGE: ltt [options] [task/list name/ID]
 	rl *	remove list
 	rt *	remove task
 	cl *	clean list
-
-
-# move task
-(ltt) da
-(ltt) mv C++ project In progress
-(ltt) da
