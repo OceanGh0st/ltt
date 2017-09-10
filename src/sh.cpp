@@ -194,8 +194,6 @@ int ltt_dl(char **args) {
 
 int ltt_mv(char **args) {
     DB database(1);
-    printf("%s %s",args[1], args[2]);
-
     if (args[3] != NULL) {
         char arg1[100];
         char arg2[100];

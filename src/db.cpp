@@ -212,8 +212,6 @@ int DB::remove_list(const char* list) {
     for (xml_node<> * list_node = root_node->first_node("list"); list_node; list_node = list_node->next_sibling()) {
         
         if (strcmp(list_node->first_attribute("name")->value(),list) == 0) {
-            
-//            printf("%s", list_node->name());
             list_node->remove_all_nodes();
             list_node->remove_all_attributes();
         }
@@ -349,19 +347,6 @@ int DB::cleanup() {
             fprintf(tmp, line);
         }
     }
-/*
-    if (!feof(f)) {
-        fprintf(stderr, "%s", "Something went wrong\n");
-        fclose(f);
-        return 1;
-    }
-
-    if (!feof(tmp)) {
-        fprintf(stderr, "%s", "Something went wrong\n");
-        fclose(f);
-        return 1;
-    }
-*/
 
     fclose(f);
     fclose(tmp);
