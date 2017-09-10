@@ -194,43 +194,114 @@ int ltt_dl(char **args) {
 
 int ltt_mv(char **args) {
     DB database(1);
-    database.move_task(args[1], args[2]);
+    printf("%s %s",args[1], args[2]);
+
+    if (args[3] != NULL) {
+        char arg1[100];
+        char arg2[100];
+
+        strcpy(arg1, args[1]);
+        strcat(arg1, " ");
+        strcat(arg1, args[2]);
+
+        strcpy(arg2, args[3]);
+        strcat(arg2, " ");
+        strcat(arg2, args[4]);
+    
+        database.move_task(arg1, arg2);
+    } else {
+        database.move_task(args[1], args[2]);
+    }
     return 1;
 }
 
 int ltt_al(char **args) {
     DB database(1);
-    database.add_list(args[1]);
+    if (args[2] != NULL) {
+        char arg1[100];
+
+        strcpy(arg1, args[1]);
+        strcat(arg1, " ");
+        strcat(arg1, args[2]);
+        database.add_list(arg1);
+    } else {
+        database.add_list(args[1]);
+    }
     return 1;
 }
 
 int ltt_at(char **args) {
     DB database(1);
-    database.add_task(args[1], args[2]);
+    if (args[3] != NULL) {
+        char arg1[100];
+        char arg2[100];
+
+        strcpy(arg1, args[1]);
+        strcat(arg1, " ");
+        strcat(arg1, args[2]);
+
+        strcpy(arg2, args[3]);
+        strcat(arg2, " ");
+        strcat(arg2, args[4]);
+    
+        database.move_task(arg1, arg2);
+    } else {
+        database.move_task(args[1], args[2]);
+    }
     return 1;
 }
 
 int ltt_ra(char **args) {
     DB database(1);
     database.remove_all();
+    database.cleanup();
     return 1;
 }
 
 int ltt_rl(char **args) {
     DB database(1);
-    database.remove_list(args[1]);
+    if (args[2] != NULL) {
+        char arg1[100];
+
+        strcpy(arg1, args[1]);
+        strcat(arg1, " ");
+        strcat(arg1, args[2]);
+        database.remove_list(arg1);
+    } else {
+        database.remove_list(args[1]);
+    }
+    database.cleanup();
     return 1;
 }
 
 int ltt_rt(char **args) {
     DB database(1);
-    database.remove_task(args[1]);
+    if (args[2] != NULL) {
+        char arg1[100];
+
+        strcpy(arg1, args[1]);
+        strcat(arg1, " ");
+        strcat(arg1, args[2]);
+        database.remove_task(arg1);
+    } else {
+        database.remove_task(args[1]);
+    }
     return 1;
 }
 
 int ltt_cl(char **args) {
     DB database(1);
-    database.clear_list(args[1]);
+    if (args[2] != NULL) {
+        char arg1[100];
+
+        strcpy(arg1, args[1]);
+        strcat(arg1, " ");
+        strcat(arg1, args[2]);
+        database.clear_list(arg1);
+    } else {
+        database.clear_list(args[1]);
+    }
+    database.cleanup();
     return 1;
 }
 

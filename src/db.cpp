@@ -300,6 +300,7 @@ int DB::move_task(const char* task_t, const char* list) {
         
         if (strcmp(list_node->first_attribute("name")->value(),list) == 0) {
 	    // add task
+
 	    xml_node<> * task_node = doc.allocate_node(node_element, "task");
 	    list_node->append_node(task_node);
             task_node->value(task_t);
@@ -310,6 +311,7 @@ int DB::move_task(const char* task_t, const char* list) {
             for (xml_node<> * task_node = list_node->first_node("task"); task_node; task_node = task_node->next_sibling()) {
 
                 if (strcmp(task_node->value(),task_t) == 0 && strcmp(list_node->first_attribute("name")->value(),list) != 0) {
+
 
                     //remove task
                     task_node->value("");
@@ -330,4 +332,41 @@ int DB::move_task(const char* task_t, const char* list) {
 }
 
 
+int DB::cleanup() {
+    
+    FILE* f;
+    FILE* tmp;
+    char line[1000];
+    unsigned n = 0;
 
+    f = fopen("data.xml", "rb+");
+    tmp = fopen("tmp.xml", "wb+");
+    
+    if (!f) { fprintf(stderr,  "%s", "Could not open file\n"); return 1; }
+
+    while (fgets(line, 1000, f)) {
+        if (strstr(line,"<list/>") == NULL) {
+            fprintf(tmp, line);
+        }
+    }
+/*
+    if (!feof(f)) {
+        fprintf(stderr, "%s", "Something went wrong\n");
+        fclose(f);
+        return 1;
+    }
+
+    if (!feof(tmp)) {
+        fprintf(stderr, "%s", "Something went wrong\n");
+        fclose(f);
+        return 1;
+    }
+*/
+
+    fclose(f);
+    fclose(tmp);
+    remove("data.xml");
+    rename("tmp.xml", "data.xml");
+    
+    return 0;
+}
