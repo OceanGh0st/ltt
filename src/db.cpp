@@ -108,11 +108,6 @@ int DB::add_list(const char* new_list) {
     xml_attribute<> *attr = doc.allocate_attribute("name", new_list);
     list_node->append_attribute(attr);
 
-    // add task
-    xml_node<> * task_node = doc.allocate_node(node_element, "task");
-    list_node->append_node(task_node);
-    task_node->value("");
-
     // save to file
     ofstream file_stored("data.xml");
     file_stored << doc;
@@ -330,28 +325,3 @@ int DB::move_task(const char* task_t, const char* list) {
 }
 
 
-int DB::cleanup() {
-    
-    FILE* f;
-    FILE* tmp;
-    char line[1000];
-    unsigned n = 0;
-
-    f = fopen("data.xml", "rb+");
-    tmp = fopen("tmp.xml", "wb+");
-    
-    if (!f) { fprintf(stderr,  "%s", "Could not open file\n"); return 1; }
-
-    while (fgets(line, 1000, f)) {
-        if (strstr(line,"<list/>") == NULL) {
-            fprintf(tmp, line);
-        }
-    }
-
-    fclose(f);
-    fclose(tmp);
-    remove("data.xml");
-    rename("tmp.xml", "data.xml");
-    
-    return 0;
-}

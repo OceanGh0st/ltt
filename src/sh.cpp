@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string.h>
 #include <unistd.h>
+#include <exception>
 #include <sys/wait.h>
 #include "rapidxml/rapidxml.hpp"
 #include "rapidxml/rapidxml_print.hpp" // to use <<
@@ -159,20 +160,20 @@ int ltt_help(char **args) {
 
     printf("displaying options\n");
     printf("\tda\tdisplay all lists\n");
-    printf("\tdl *\tdisplay list\n");
+    printf("\tdl ^\tdisplay list\n");
 
     printf("moving options\n");
     printf("\tmv * ^  move task to list\n");
 
     printf("adding options\n");
-    printf("\tal *\tadd list\n");
-    printf("\tat *\tadd task\n");
+    printf("\tal ^\tadd list\n");
+    printf("\tat * ^  add task to list\n");
 
     printf("removing options\n");
     printf("\tra\tremove all lists\n");
-    printf("\trl *\tremove list\n");
+    printf("\trl ^\tremove list\n");
     printf("\trt *\tremove task\n");
-    printf("\tcl *\tclean list\n\n");
+    printf("\tcl ^\tclean list\n\n");
 
     return 1;
 
@@ -215,6 +216,7 @@ int ltt_mv(char **args) {
 
 int ltt_al(char **args) {
     DB database(1);
+
     if (args[2] != NULL) {
         char arg1[100];
 
@@ -225,6 +227,7 @@ int ltt_al(char **args) {
     } else {
         database.add_list(args[1]);
     }
+
     return 1;
 }
 
@@ -252,7 +255,6 @@ int ltt_at(char **args) {
 int ltt_ra(char **args) {
     DB database(1);
     database.remove_all();
-    database.cleanup();
     return 1;
 }
 
@@ -268,7 +270,6 @@ int ltt_rl(char **args) {
     } else {
         database.remove_list(args[1]);
     }
-    database.cleanup();
     return 1;
 }
 
@@ -299,7 +300,6 @@ int ltt_cl(char **args) {
     } else {
         database.clear_list(args[1]);
     }
-    database.cleanup();
     return 1;
 }
 

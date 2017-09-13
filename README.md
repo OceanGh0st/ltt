@@ -16,15 +16,15 @@ ltt (LittleTerminalTasks) - simple program to organize tasks
 
 ltt - LittleTerminalTasks
 
-USAGE: ltt [options] [task/list name]
+USAGE: (ltt) [options] [task/list name]
 
 	h, help prints out help
 	da	display all lists
-	dl *	display list
+	dl ^	display list
 	mv * ^  move task to list
-	al *	add list
-	at *	add task
+	al ^	add list
+	at * ^	add task
 	ra	remove all lists
-	rl *	remove list
+	rl ^	remove list
 	rt *	remove task
-	cl *	clean list
+	cl ^	clean list

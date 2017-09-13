@@ -18,7 +18,6 @@ public:
     int remove_list(const char* list);
     int remove_task(const char* task);
     int clear_list(const char* list);
-    int cleanup();
 };
 
 #endif
