@@ -279,8 +279,18 @@ inline OutIt print_pi_node(OutIt out, const xml_node<Ch> *node, int flags, int i
             if (node->value_size() == 0 && !node->first_node())
             {
                 // Print childless node tag ending
+                /* changed 
                 *out = Ch('/'), ++out;
                 *out = Ch('>'), ++out;
+                */
+
+                *out = Ch('>'), ++out;
+                // Print noe end
+                *out = Ch('<'), ++out;
+                *out = Ch('/'), ++out;
+                out = copy_chars(node->name(), node->name() + node->name_size(), out);
+                *out = Ch('>'), ++out;
+                
             }
             else
             {
